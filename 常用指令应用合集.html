@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .www{
+            color: red;
+
+        }
+    </style>
+</head>
+<body ng-app="App">
+<div class="box" ng-controller="cont">
+    <ul>
+        <li ng-show="true">ng-show</li>
+        <li ng-hide="false">ng-hide</li>
+        <li ng-if="true">ng-if</li>
+        <img ng-src="images/author.jpg">
+        <li ng-class="{www:true}">ng-class</li>
+        <input type="text" value="ng-disabled" ng-disabled="1">
+        <input type="text" value="ng-readonly" ng-readonly="1">
+
+        <input type="checkbox" ng-checked="true">{{name}}
+
+        <li>
+            <select name="" id="">
+                <option value="1">11</option>
+                <option value="1">11</option>
+                <option value="1" ng-selected="1">scasdc</option>
+            </select>
+        </li>
+    </ul>
+</div>
+<script src="libs/angular.min.js"></script>
+<script>
+    var app = angular.module('App',[]);
+    app.controller('cont',['$scope',function ($scope) {
+        $scope.name = 'xiaoming';
+
+    }])
+    //自定义指令
+    app.directive('rrr',function () {
+        return{
+            //自定义指令类型
+            // E element
+            // A attribute
+            // C class
+            // M mark
+            restrict:'E',
+            //指令模板
+            template:'<h1>angularJS</h1>',
+            //指令外部模板
+//            templateUrl:''
+            //是否替换原有标签,replace 必须为true
+            replace:true
+        }
+    })
+</script>
+
+</body>
+</html>
+<!--ng-app指定应用根元素，至少有一个元素指定了此属性。-->
+<!--ng-controller指定控制器-->
+<!--ng-show控制元素是否显示，true显示、false不显示-->
+<!--ng-hide控制元素是否隐藏，true隐藏、false不隐藏-->
+<!--ng-if控制元素是否“存在”，true存在、false不存在-->
+<!--ng-src增强图片路径-->
+<!--ng-href增强地址-->
+<!--ng-class控制类名-->
+<!--ng-include引入模板-->
+<!--ng-disabled表单禁用-->
+<!--ng-readonly表单只读-->
+<!--ng-checked单/复选框表单选中-->
+<!--ng-selected下拉框表单选中-->
