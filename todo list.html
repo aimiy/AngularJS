@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="App">
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+</head>
+<body>
+<div class="box" ng-controller="list">
+    <label for="todo" form="form1">todo</label>
+    <form id="form1" ng-submit="submitfn()">
+        <input type="text" id="todo" ng-model="thing" placeholder="请输入待办事项">
+    </form>
+
+    <dl>
+        <dt>待办事项</dt>
+        <dd ng-repeat="x in todos track by $index">
+            <input type="checkbox" ng-checked="x.checked" ng-click="done($index)">
+            {{x.text}}
+            <a href="#" ng-click="delete($index,todos)">删除</a>
+        </dd>
+
+        <dt>已完成</dt>
+        <dd ng-repeat="x in dones track by $index">
+            <input type="checkbox" ng-checked="x.checked" ng-click="cancel($index)">
+            {{x.text}}
+            <a href="#" ng-click="delete($index,dones)">删除</a>
+        </dd>
+    </dl>
+</div>
+<script src="libs/angular.min.js"></script>
+<script>
+    var App = angular.module('App',[]);
+
+    App.controller('list',['$scope',function ($scope) {
+        $scope.todos = [];
+        $scope.dones = [];
+        //提交后的数据输入到todos
+        $scope.submitfn = function () {
+            $scope.todos.push({text:$scope.thing,checked:false});
+            $scope.thing = '';
+        }
+        //勾选已完成
+        $scope.done = function (index) {
+            var temp = $scope.todos.splice(index,1);
+            temp[0].checked = !temp[0].checked;
+            $scope.dones = $scope.dones.concat(temp);
+        }
+        //取消已完成
+        $scope.cancel =function(index){
+            var temp = $scope.dones.splice(index,1);
+            temp[0].checked = !temp[0].checked;
+            $scope.todos = $scope.todos.concat(temp);
+        }
+        //删除
+        $scope.delete = function(index,t) {
+            t.splice(index,1);
+        }
+    }])
+</script>
+</body>
+</html>
