@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+</head>
+<body ng-app="App">
+<ul ng-controller="DemoController">
+    <li>{{price|currency:'￥'}}</li>
+    <li>{{now|date:'yyyy/MM/dd hh:mm:ss'}}</li>
+    <li>{{items|filter:'s'}}</li>
+    <li>{{students|filter:{age: 16} }}</li>
+    <li>{{students|json}}</li>
+    <li>{{items|limitTo:-1}}</li>
+    <li>{{str|uppercase|limitTo:3}}</li>
+    <li>{{str|lowercase}}</li>
+    <li>{{num|number:2}}</li>
+    <li>{{items|orderBy: '':true}}</li>
+    <li>{{students|orderBy: 'age': false}}</li>
+    <li ng-repeat="s in students">{{s.name|demo}}</li>
+</ul>
+
+<script src="./libs/angular.min.js"></script>
+<script>
+    var App = angular.module('App', []);
+
+    App.filter('demo',function () {
+        return function (aaa) {
+            return 'hello'+aaa;
+        }
+    })
+
+    App.controller('DemoController', ['$scope', function ($scope) {
+
+        $scope.price = 11.11;
+
+        $scope.now = new Date;
+
+        $scope.items = ['html', 'css', 'js'];
+
+        $scope.students = [
+            {name: '小红', age: 16},
+            {name: '小明', age: 16},
+            {name: '小米', age: 10}
+
+        ];
+
+        $scope.str = 'hello Angular';
+
+        $scope.num = '10.2345';
+    }]);
+</script>
+</body>
+</html>
+<!--1、currency将数值格式化为货币格式-->
+<!--2、date日期格式化，年（y）、月（M）、日（d）、星期（EEEE/EEE）、时（H/h）、分（m）、秒（s）、毫秒（.sss），也可以组合到一起使用。-->
+<!--3、filter在给定数组中选择满足条件的一个子集，并返回一个新数组，其条件可以是一个字符串、对象、函数-->
+<!--4、json将Javascrip对象转成JSON字符串。-->
+<!--5、limitTo取出字符串或数组的前（正数）几位或后（负数）几位-->
+<!--6、lowercase将文本转换成小写格式-->
+<!--7、uppercase将文本转换成大写格式-->
+<!--8、number数字格式化，可控制小位位数-->
+<!--9、orderBy对数组进行排序，第2个参数可控制方向-->
